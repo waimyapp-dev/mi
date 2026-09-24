@@ -1,0 +1,13 @@
+node_modules/
+dist/
+out/
+*.vsix
+.mi/out/
+.mi/in/
+.mi/blocks/
+.mi/backups/
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

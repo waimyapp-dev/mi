@@ -1,0 +1,23 @@
+{
+  "name": "mio",
+  "version": "1.0.0",
+  "description": "Bloques con ID para trabajar con IA sin perder contexto",
+  "type": "module",
+  "bin": { "mio": "./dist/cli.js" },
+  "workspaces": ["mi-vscode"],
+  "files": ["dist", "templates", "README.md"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsup",
+    "build:ext": "npm run -w mi-vscode compile && npm run -w mi-vscode package",
+    "postinstall": "node scripts/setup.cjs",
+    "prepare": "npm run build"
+  },
+  "dependencies": { "commander": "^12.1.0" },
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}
