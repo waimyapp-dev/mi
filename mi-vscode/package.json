@@ -2,7 +2,7 @@
   "name": "mi-vscode",
   "displayName": "mio",
   "description": "Bloques de código con IA",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "waimyapp-dev",
   "engines": {
     "vscode": "^1.85.0"
@@ -40,13 +40,23 @@
         "icon": "$(new-file)"
       },
       {
+        "command": "mio.copyBlock",
+        "title": "Copiar bloque",
+        "icon": "$(clippy)"
+      },
+      {
+        "command": "mio.copyBlockWithRelated",
+        "title": "Copiar bloque + relacionados",
+        "icon": "$(references)"
+      },
+      {
         "command": "mio.find",
         "title": "Buscar",
         "icon": "$(search)"
       },
       {
         "command": "mio.doctor",
-        "title": "Diagnóstico",
+        "title": "Diagnostico",
         "icon": "$(pulse)"
       },
       {
@@ -63,6 +73,11 @@
         "command": "mio.stopPlay",
         "title": "Detener",
         "icon": "$(debug-stop)"
+      },
+      {
+        "command": "mio.deploy",
+        "title": "Deploy a Cloudflare",
+        "icon": "$(cloud-upload)"
       },
       {
         "command": "mio.copyExport",
@@ -83,11 +98,6 @@
         "command": "mio.openBlock",
         "title": "Abrir bloque",
         "icon": "$(go-to-file)"
-      },
-      {
-        "command": "mio.deploy",
-        "title": "Deploy a Cloudflare",
-        "icon": "$(cloud-upload)"
       }
     ],
     "menus": {
@@ -98,19 +108,29 @@
           "group": "1_principal@1"
         },
         {
-          "command": "mio.newBlock",
+          "command": "mio.deploy",
           "when": "view == mio.blocksView",
           "group": "1_principal@2"
         },
         {
-          "command": "mio.find",
+          "command": "mio.refresh",
           "when": "view == mio.blocksView",
           "group": "1_principal@3"
         },
         {
-          "command": "mio.doctor",
+          "command": "mio.newBlock",
           "when": "view == mio.blocksView",
           "group": "1_principal@4"
+        },
+        {
+          "command": "mio.find",
+          "when": "view == mio.blocksView",
+          "group": "1_principal@5"
+        },
+        {
+          "command": "mio.doctor",
+          "when": "view == mio.blocksView",
+          "group": "1_principal@6"
         },
         {
           "submenu": "mio.moreMenu",
@@ -120,31 +140,52 @@
       ],
       "view/item/context": [
         {
-          "command": "mio.openBlock",
+          "command": "mio.copyBlock",
           "when": "view == mio.blocksView && viewItem == block",
           "group": "inline@1"
+        },
+        {
+          "command": "mio.copyBlockWithRelated",
+          "when": "view == mio.blocksView && viewItem == block",
+          "group": "inline@2"
+        },
+        {
+          "command": "mio.openBlock",
+          "when": "view == mio.blocksView && viewItem == block",
+          "group": "inline@3"
+        },
+        {
+          "command": "mio.copyBlock",
+          "when": "view == mio.blocksView && viewItem == block",
+          "group": "1_copiar@1"
+        },
+        {
+          "command": "mio.copyBlockWithRelated",
+          "when": "view == mio.blocksView && viewItem == block",
+          "group": "1_copiar@2"
+        },
+        {
+          "command": "mio.openBlock",
+          "when": "view == mio.blocksView && viewItem == block",
+          "group": "2_abrir@1"
         }
       ],
       "mio.moreMenu": [
         {
-          "command": "mio.deploy",
-          "group": "1_deploy@1"
-        },
-        {
           "command": "mio.setup",
-          "group": "2_proyecto@1"
+          "group": "1_proyecto@1"
         },
         {
           "command": "mio.copyExport",
-          "group": "3_contexto@1"
+          "group": "2_contexto@1"
         },
         {
           "command": "mio.copySystemPrompt",
-          "group": "3_contexto@2"
+          "group": "2_contexto@2"
         },
         {
-          "command": "mio.refresh",
-          "group": "4_utils@1"
+          "command": "mio.stopPlay",
+          "group": "3_utils@1"
         }
       ]
     },
@@ -157,7 +198,7 @@
     "submenus": [
       {
         "id": "mio.moreMenu",
-        "label": "Más acciones"
+        "label": "Mas acciones"
       }
     ]
   },

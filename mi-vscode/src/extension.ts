@@ -8,6 +8,7 @@ import { DoctorPanel } from "./panels/doctorPanel.js";
 import { FindPanel } from "./panels/findPanel.js";
 import { SetupPanel } from "./panels/setupPanel.js";
 import { play, stopPlay, deployToCloudflare } from "./panels/playPanel.js";
+import { buildBlockCopy, buildBlockWithRelatedCopy } from "./copyHelper.js";
 
 export function activate(context: vscode.ExtensionContext) {
   const provider = new BlocksProvider();
@@ -33,6 +34,29 @@ export function activate(context: vscode.ExtensionContext) {
     const ed = await vscode.window.showTextDocument(doc);
     const pos = new vscode.Position(b.startLine - 1, 0);
     ed.revealRange(new vscode.Range(pos, pos));
+  });
+
+  reg("mio.copyBlock", async (node: any) => {
+    const id = node?.id; if (!id) return;
+    try {
+      const text = await buildBlockCopy(id);
+      await vscode.env.clipboard.writeText(text);
+      vscode.window.showInformationMessage("Bloque '" + id + "' copiado. Pegalo en la IA.");
+    } catch (e: any) {
+      vscode.window.showErrorMessage("copyBlock: " + e.message);
+    }
+  });
+
+  reg("mio.copyBlockWithRelated", async (node: any) => {
+    const id = node?.id; if (!id) return;
+    try {
+      const root = getWorkspaceRoot();
+      const text = await buildBlockWithRelatedCopy(id, root);
+      await vscode.env.clipboard.writeText(text);
+      vscode.window.showInformationMessage("Bloque '" + id + "' + relacionados copiados. Pegalo en la IA.");
+    } catch (e: any) {
+      vscode.window.showErrorMessage("copyBlockWithRelated: " + e.message);
+    }
   });
 
   reg("mio.copySystemPrompt", async () => {
